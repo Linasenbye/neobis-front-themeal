@@ -23,18 +23,22 @@ const Meal = () => {
         fetchMeal();
     }, [mealId]);
 
-    const renderIngredients = (meal) => {
+    const printIngredientsWithMeasure = (meal) => {
         const ingredients = [];
         for (let i = 1; i <= 20; i++) {
             const ingredient = meal[`strIngredient${i}`];
+            const measure = meal[`strMeasure${i}`];
             if (ingredient && ingredient.trim() !== '') {
-                ingredients.push(ingredient);
+                ingredients.push({ ingredient, measure });
             }
         }
-        return ingredients.map((ingredient, index) => (
-            <li key={index}>{ingredient}</li>
+        return ingredients.map((item, index) => (
+            <li key={index}>
+                {item.ingredient} - {item.measure}
+            </li>
         ));
     };
+    
 
     return (
         <>
@@ -45,7 +49,7 @@ const Meal = () => {
                             <h2 className="title">{meal.strMeal}</h2>
                             <p>{meal.strCategory} | {meal.strArea}</p>
                             <h3>Ingredients:</h3>
-                            <ul>{renderIngredients(meal)}</ul>
+                            <ul>{printIngredientsWithMeasure(meal)}</ul>
                         </div>
                         <div className="meal-img">
                             <img src={meal.strMealThumb} alt={meal.strMeal}/>
